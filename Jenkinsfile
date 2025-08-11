@@ -6,7 +6,7 @@ pipeline {
     }
 
     stages {
-        stage('0. 자동화 확인1') { steps { echo '스테이지 출발' } }
+        stage('0. 자동화 확인') { steps { echo '스테이지 출발' } }
         /*
         stage('1. Build') {
             steps {
@@ -42,7 +42,7 @@ pipeline {
                 }
             }
         } */
-        stage('5. Deploy to K3s') {
+  /*      stage('5. Deploy to K3s') {
 			steps {
                 sh '''
                 export KUBECONFIG=/home/vagrant/.kube/config
@@ -50,6 +50,16 @@ pipeline {
                 '''
             }
         }
+        
+     */   
+     stage('6. Deploy with Helm') {
+		steps {
+			sh '''
+			export KUBECONFIG=/home/vagrant/.kube/config                
+			helm upgrade --install ex02-app ./charts/ex02-app --namespace default
+			'''
+			}
+		}             
     }
 }
 
